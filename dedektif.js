@@ -605,7 +605,7 @@ function renderStore() {
 
         let btnHtml = '';
         if (!item.owned) {
-            btnHtml = `<button class="btn-buy" onclick="buyStoreItem('${item.id}', event)">Satın Al (${item.price} <i class="fa-solid fa-star"></i>)</button>`;
+            btnHtml = `<button class="btn-buy" onclick="buyStoreItem('${item.id}', event)">Satın Al (${item.price} <i class="fa-solid fa-star" style="font-size: 0.8em;"></i>)</button>`;
         } else if (item.equipped) {
             if (item.type === 'npc-accessory') {
                 btnHtml = `<button class="btn-equipped" onclick="equipStoreItem('${item.id}')">Çıkar</button>`;
