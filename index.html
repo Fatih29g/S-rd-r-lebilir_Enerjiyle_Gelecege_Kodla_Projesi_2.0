@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoTürkiye - Sürdürülebilir Gelecek</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Central Logo (Optional, floats over everything) -->
+    <div class="center-brand">
+        <i class="fa-solid fa-leaf"></i> Eco<span>Türkiye</span>
+    </div>
+
+    <!-- Top Right Auth Button -->
+    <div class="auth-container">
+        <button id="openAuthModal" class="auth-btn">
+            <i class="fa-solid fa-user-astronaut"></i> Giriş Yap
+        </button>
+    </div>
+
+    <div class="container">
+        <!-- Left Side: Carbon & Energy Map -->
+        <div class="split left">
+            <div class="overlay"></div>
+            <div class="content">
+                <div class="icon-wrapper">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                </div>
+                <h1>Karbon & Enerji<br>Haritası</h1>
+                <p>Şehirlerimizin karbon ayak izini detaylı harita üzerinden inceleyin ve yenilenebilir enerji
+                    potansiyellerine göre yatırım planları oluşturun.</p>
+                <a href="karbon.html" class="btn btn-glow-green">
+                    Uygulamaya Git <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Right Side: Energy Efficiency -->
+        <div class="split right">
+            <div class="overlay"></div>
+            <div class="content">
+                <div class="icon-wrapper">
+                    <i class="fa-solid fa-user-secret"></i>
+                </div>
+                <h1>Enerji<br>Dedektifi</h1>
+                <p>Eşyaları incele, evdeki gizli enerji kaçaklarını bul! Gereksiz tüketimi tespit et ve enerji israfını
+                    önleyerek puanları topla.</p>
+                <a href="dedektif.html" class="btn btn-glow-blue">
+                    Oyuna Başla <i class="fa-solid fa-gamepad"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+
+            <div class="auth-tabs">
+                <button class="tab-btn active" data-tab="login">Giriş Yap</button>
+                <button class="tab-btn" data-tab="register">Kayıt Ol</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active">
+                <h2>Hoş Geldin, Ajan!</h2>
+                <p class="auth-desc">Sisteme giriş yaparak görevlerine devam et.</p>
+                <div class="input-group">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" placeholder="Kullanıcı Adı" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="Şifre" required>
+                </div>
+                <button type="submit" class="btn btn-glow-green auth-submit-btn">
+                    Sisteme Gir <i class="fa-solid fa-right-to-bracket"></i>
+                </button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" class="auth-form">
+                <h2>Ekibe Katıl</h2>
+                <p class="auth-desc">Sürdürülebilir gelecek için yeni bir ajan ol.</p>
+                <div class="input-group">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" placeholder="Kullanıcı Adı" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" placeholder="E-posta" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="Şifre" required>
+                </div>
+                <button type="submit" class="btn btn-glow-blue auth-submit-btn">
+                    Kayıt Ol <i class="fa-solid fa-user-plus"></i>
+                </button>
+            </form>
+
+            <!-- Success Message -->
+            <div id="successMessage" class="success-message">
+                <div class="success-icon">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h3>Ajan Kişi Eklendi!</h3>
+                <p>Aramıza hoş geldin. Sürdürülebilir bir gelecek için göreve hazırsın.</p>
+                <button type="button" id="continueBtn" class="btn btn-glow-green auth-submit-btn">
+                    Devam Et <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

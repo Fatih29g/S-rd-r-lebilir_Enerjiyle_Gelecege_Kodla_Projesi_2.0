@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karbon Haritası - EcoTürkiye</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="karbon_style.css">
+</head>
+
+<body>
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar glass-panel">
+            <div class="brand">
+                <i class="fa-solid fa-leaf"></i>
+                <h1>Eco<span>Türkiye</span></h1>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-btn active" data-tab="map-tab"><i class="fa-solid fa-map"></i> Harita</button>
+                <button class="nav-btn" data-tab="investments-tab"><i class="fa-solid fa-chart-line"></i>
+                    Yatırımlar</button>
+                <button class="nav-btn" data-tab="calc-tab"><i class="fa-solid fa-calculator"></i> Hesaplayıcı</button>
+                <a href="index.html" class="nav-btn" style="text-decoration: none; margin-top: auto;">
+                    <i class="fa-solid fa-arrow-left"></i> Ana Sayfa
+                </a>
+            </div>
+            <div class="stats-overview">
+                <h3>Genel Durum</h3>
+                <div class="stat-card">
+                    <i class="fa-solid fa-smog text-glow-red"></i>
+                    <div class="stat-info">
+                        <span class="stat-label">Toplam Emisyon</span>
+                        <span class="stat-value">520M Ton</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fa-solid fa-bolt text-glow-green"></i>
+                    <div class="stat-info">
+                        <span class="stat-label">Yeşil Enerji Hedefi</span>
+                        <span class="stat-value">%60</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Map Tab -->
+            <div id="map-tab" class="tab-content active">
+                <div class="header-glass glass-panel">
+                    <h2>Karbon Ayak İzi Haritası</h2>
+                    <p>Şehirlerin emisyon verilerini inceleyin.</p>
+                </div>
+                <div class="map-wrapper glass-panel">
+                    <div id="turkey-map"></div>
+                </div>
+                <!-- City Info Panel -->
+                <div id="city-info-panel" class="city-panel glass-panel hidden">
+                    <button id="close-panel" class="close-btn"><i class="fa-solid fa-times"></i></button>
+                    <h3 id="city-name">Şehir</h3>
+                    <div class="city-metrics">
+                        <div class="metric">
+                            <span>Karbon:</span>
+                            <strong id="city-carbon"></strong>
+                        </div>
+                        <div class="metric">
+                            <span>Potansiyel:</span>
+                            <div id="city-energy-icons" class="energy-icons"></div>
+                        </div>
+                    </div>
+                    <div class="city-description">
+                        <h4>Detaylar</h4>
+                        <p id="city-desc-text"></p>
+                    </div>
+                    <button id="create-plan-btn" class="btn-glow">
+                        Yatırım Planı Oluştur <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Investments Tab -->
+            <div id="investments-tab" class="tab-content">
+                <div class="header-glass glass-panel">
+                    <h2>Yatırım Projeleri</h2>
+                    <p>Yeşil enerjiye geçiş projelerini keşfedin.</p>
+                </div>
+                <div id="investments-grid" class="investments-grid"></div>
+            </div>
+
+            <!-- Calculator Tab -->
+            <div id="calc-tab" class="tab-content">
+                <div class="header-glass glass-panel">
+                    <h2>Karbon Ayak İzi Hesaplayıcı</h2>
+                    <p>Aylık tüketim değerlerinizi girerek karbon izinizi hesaplayın.</p>
+                </div>
+                <div class="calc-container glass-panel">
+                    <form id="carbon-form" class="calc-form">
+                        <div class="calc-section">
+                            <h3><i class="fa-solid fa-bolt" style="color:var(--accent-yellow)"></i> Enerji Tüketimi</h3>
+                            <div class="input-group">
+                                <label for="elec-usage">Aylık Elektrik Tüketimi (kWh)</label>
+                                <input type="number" id="elec-usage" min="0" placeholder="Örn: 200" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="gas-usage">Aylık Doğalgaz Tüketimi (m³)</label>
+                                <input type="number" id="gas-usage" min="0" placeholder="Örn: 150" required>
+                            </div>
+                        </div>
+
+                        <div class="calc-section">
+                            <h3><i class="fa-solid fa-car" style="color:var(--accent-blue)"></i> Ulaşım</h3>
+                            <div class="input-group">
+                                <label for="car-km">Aylık Araç Kullanımı (km)</label>
+                                <input type="number" id="car-km" min="0" placeholder="Örn: 500" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="fuel-type">Araç Yakıt Türü</label>
+                                <select id="fuel-type">
+                                    <option value="petrol">Benzin</option>
+                                    <option value="diesel">Dizel</option>
+                                    <option value="lpg">LPG</option>
+                                    <option value="electric">Elektrikli</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="calc-section">
+                            <h3><i class="fa-solid fa-recycle" style="color:var(--accent-green)"></i> Atık ve Geri
+                                Dönüşüm</h3>
+                            <div class="input-group checkbox-group">
+                                <input type="checkbox" id="recycling">
+                                <label for="recycling">Evde atıkları (kağıt, plastik, cam) ayrıştırıyorum.</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-glow calc-submit-btn" style="margin-top: 10px;">Hesapla <i
+                                class="fa-solid fa-calculator"></i></button>
+                    </form>
+
+                    <div id="calc-results" class="calc-results hidden">
+                        <div style="display: flex; align-items: center; gap: 32px; width: 100%;">
+                            <div class="result-circle">
+                                <h2 id="total-co2">0</h2>
+                                <span>kg CO₂ / Ay</span>
+                            </div>
+                            <div class="result-details" style="flex: 1;">
+                                <h3 id="result-message">Durum</h3>
+                                <p id="result-desc">Bu emisyon değerini doğadan silmek için yılda yaklaşık <strong
+                                        id="tree-count">0</strong> ağaç dikilmesi gerekiyor.</p>
+                            </div>
+                            <button type="button" id="download-calc-btn" class="btn-glow"
+                                style="padding: 12px 24px; font-size: 0.9rem; align-self: center;">Sonucu İndir <i
+                                    class="fa-solid fa-download"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div id="report-modal" class="modal-overlay hidden">
+        <div class="modal-content glass-panel">
+            <button id="close-modal" class="close-btn"><i class="fa-solid fa-times"></i></button>
+            <div class="modal-header">
+                <i id="modal-icon"></i>
+                <h2 id="modal-title">Başlık</h2>
+            </div>
+            <div class="report-section">
+                <h3><i class="fa-solid fa-file-contract"></i> Proje Özeti</h3>
+                <p id="modal-desc"></p>
+            </div>
+            <div class="report-grid">
+                <div class="report-card">
+                    <span>Maliyet</span>
+                    <strong id="modal-cost"></strong>
+                </div>
+                <div class="report-card">
+                    <span>Amortisman (ROI)</span>
+                    <strong id="modal-roi" class="text-glow-green"></strong>
+                </div>
+                <div class="report-card">
+                    <span>Tahmini Karbon Azalması</span>
+                    <strong id="modal-reduction" class="text-glow-blue"></strong>
+                </div>
+                <div class="report-card">
+                    <span>Yeni İstihdam</span>
+                    <strong id="modal-jobs" class="text-glow-yellow"></strong>
+                </div>
+            </div>
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>Yapay Zeka Fizibilite Skoru</span>
+                    <span>%90</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 90%;"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-glow download-btn">Raporu İndir <i class="fa-solid fa-download"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="karbon_data.js"></script>
+    <script src="karbon.js"></script>
+</body>
+
+</html>

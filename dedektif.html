@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enerji Dedektifi - Seviyeler</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dedektif_style.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-user-secret"></i> Enerji<span>Dedektifi</span>
+        </div>
+
+        <div class="hud-center">
+            <div class="level-indicator">
+                <i class="fa-solid fa-map-location-dot"></i> <span id="level-name">Bölüm 1: Salon ve Mutfak</span>
+            </div>
+            <div class="stats-container">
+                <div class="stat-box rank-box">
+                    <i class="fa-solid fa-medal"></i> <span id="rank-text">Stajyer Dedektif</span>
+                </div>
+                <div class="stat-box combo-box hidden" id="combo-container">
+                    <i class="fa-solid fa-fire"></i> <span id="combo-text">Seri x2</span>
+                </div>
+                <div class="stat-box score-box">
+                    <i class="fa-solid fa-star"></i> Puan: <span id="score">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-right" style="display:flex; gap:15px; align-items:center;">
+            <button id="theme-toggle-btn" class="btn btn-glow-blue" style="padding: 0.6rem 1.2rem; font-size:1rem;"><i
+                    class="fa-solid fa-moon"></i></button>
+            <button id="open-store-btn" class="btn btn-glow-blue" style="padding: 0.6rem 1.2rem; font-size:1rem;"><i
+                    class="fa-solid fa-store"></i> Market</button>
+            <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Ana Sayfa</a>
+        </div>
+    </header>
+
+    <!-- Main Game Area -->
+    <main class="game-container">
+        <div class="room" id="room">
+            <!-- Items will be generated here by JS -->
+        </div>
+    </main>
+
+    <!-- Question Modal -->
+    <div id="question-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-top-actions">
+                <button id="hint-btn" class="hint-btn tooltip-container"><i class="fa-solid fa-magic"></i> İpucu (-50
+                    Puan)
+                    <span class="tooltip">Yanlış şıklardan birini eler</span>
+                </button>
+                <button class="close-btn" id="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="modal-header">
+                <i id="modal-icon" class="fa-solid fa-bolt"></i>
+                <h2 id="modal-title">Eşya Adı</h2>
+            </div>
+            <p id="modal-question" class="question-text">Soru metni buraya gelecek.</p>
+            <div id="modal-options" class="options-container">
+                <!-- Options will be generated here -->
+            </div>
+            <div id="modal-feedback" class="feedback-message hidden">
+                <!-- Feedback message -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Victory / Next Level Modal -->
+    <div id="victory-modal" class="modal-overlay hidden">
+        <div class="modal-content victory-content">
+            <i id="victory-icon" class="fa-solid fa-check-circle victory-icon"></i>
+            <h2 id="victory-title">Bölüm Tamamlandı!</h2>
+            <p id="victory-desc">Tebrikler Dedektif! Bu odadaki tüm enerji kaçaklarını başarıyla tespit ettiniz.</p>
+            <div class="final-score">
+                Mevcut Puan: <span id="final-score-text">0</span><br>
+                <span style="font-size: 1.2rem; color: #cbd5e1;">Rütbe: <span id="final-rank-text">Stajyer
+                        Dedektif</span></span>
+            </div>
+            <button id="next-level-btn" class="btn btn-glow-blue hidden">Sonraki Bölüme Geç <i
+                    class="fa-solid fa-arrow-right"></i></button>
+            <a href="index.html" id="finish-game-btn" class="btn btn-glow-green hidden">Ana Sayfaya Dön</a>
+        </div>
+    </div>
+
+    <!-- Store Modal -->
+    <div id="store-modal" class="modal-overlay hidden">
+        <div class="modal-content store-content">
+            <button class="close-btn" id="close-store-modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header">
+                <i class="fa-solid fa-store" style="color: #f1c40f;"></i>
+                <h2>Dedektif Mağazası</h2>
+            </div>
+            <p class="question-text" style="margin-bottom: 1rem;">Kazandığınız puanlarla kozmetik öğeler satın
+                alabilirsiniz!</p>
+            <div class="store-balance" style="margin-bottom: 1.5rem; font-weight:600; color:var(--primary);">
+                <i class="fa-solid fa-wallet"></i> Bakiye: <span id="store-balance">0</span> Puan
+            </div>
+            <div id="store-items" class="store-grid">
+                <!-- Store items injected by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Detective NPC -->
+    <div id="detective-npc" class="npc-container hidden-npc">
+        <div class="speech-bubble" id="npc-speech-bubble">Merhaba!</div>
+        <div class="npc-character">
+            <!-- Base Mannequin Image -->
+            <div id="npc-base"></div>
+            <!-- Accessories -->
+            <i class="fa-solid fa-glasses npc-accessory hidden-accessory" id="acc-glasses"></i>
+            <i class="fa-brands fa-redhat npc-accessory hidden-accessory" id="acc-hat"></i>
+            <i class="fa-solid fa-user-tie npc-accessory hidden-accessory" id="acc-tie"></i>
+        </div>
+    </div>
+
+    <script src="dedektif.js"></script>
+</body>
+
+</html>
